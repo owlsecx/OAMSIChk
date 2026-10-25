@@ -18,13 +18,18 @@
 
 ## 📌 Overview
 
-OAMSIChk is a security and privacy tool from the OwlSec suite.
+OAMSIChk is an offline blue-team tool for catching defense-evasion code in PowerShell and other scripts. It decodes -EncodedCommand payloads layer by layer and flags AMSI bypasses, ETW patching and Defender-tampering markers. It also extracts IOCs and generates Sigma rules. It only reads data and never runs scripts or patches AMSI/ETW.
 
 ---
 
 ## ✨ Features
 
-- Standalone executable, no Python installation needed.
+- Script scanner that decodes PowerShell -EncodedCommand layers and flags AMSI, ETW and Defender-evasion markers
+- File and directory marker scanner with IOC extraction
+- Blob decoder: Shannon entropy grading plus base64, base64-UTF16, hex, ROT13 and single-byte XOR recovery
+- Searchable catalog of evasion techniques mapped to MITRE ATT&CK
+- Sigma-rule generator and ATT&CK coverage summary
+- Reports in TXT / JSON / Markdown / CSV / SARIF; exits with code 3 on CRITICAL/HIGH findings
 
 ---
 
@@ -38,8 +43,14 @@ OAMSIChk is a security and privacy tool from the OwlSec suite.
 ## 🚀 Usage
 
 ```bash
-./OAMSIChk
+./OAMSIChk                                   # interactive menu
+./OAMSIChk --script suspicious.ps1
+./OAMSIChk --scan ./scripts
+./OAMSIChk --decode "<base64 blob>"
+./OAMSIChk --sigma > amsi_rules.yml
 ```
+
+Run `./OAMSIChk --help` for the full list of options.
 
 ---
 
